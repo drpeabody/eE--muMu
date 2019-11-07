@@ -1,0 +1,26 @@
+
+## Change this paramter to point to your pythia installation
+
+PYTHIA="/home/abhishek/hep/pythia8240/"
+
+## Do not change anything below this
+
+OUTPUT_DIR=$(pwd)
+BUILD_DIR="${PYTHIA}examples/"
+
+if [ ! -f ./main-1.cc ]; then
+    echo "Main PYTHIA code not found! Aborting."
+else
+    echo "Building PYTHIA code..."
+
+    if [ ! -d $BUILD_DIR ]; then
+        echo "PYTHIA installation not found! Aborting."
+    else
+        cp main-1.cc "${BUILD_DIR}main-1.cc"
+        cd $BUILD_DIR
+        make main-1 || exit 1
+        echo "Build complete, running code"
+        ./main-1 > $OUTPUT_DIR/pythia-output
+        echo "Done, output saved as ${OUTPUT_DIR}/pythia-output."
+    fi
+fi

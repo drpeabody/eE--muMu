@@ -41,18 +41,24 @@ int main(int argc, char *argv[]) {
         #define Ev pythia.process
         #define mu 13
         #define mubar -13
-        #define e 11
-        #define ebar -11
+        #define electron 11
+        #define positron -11
         #define id_e 3
         #define id_mu 5
+        #define id_mu_bar 6
         
-        if(Ev[id_e].id() != e || Ev[id_mu].id() != mu) 
+        if(Ev[id_e].id() != electron || Ev[id_mu].id() != mu) 
             continue; // Skip anomalous Events
 
-        double angle = 1.0/900;
+        double angle = 0.0;
+        // auto e = Ev[id_e], m = Ev[id_mu];
+        angle = 
+            Ev[id_e].px() * Ev[id_mu].px() + 
+            Ev[id_e].py() * Ev[id_mu].py() + 
+            Ev[id_e].pz() * Ev[id_mu].pz();
+        angle = angle / ( Ev[id_e].pAbs() * Ev[id_mu].pAbs() );
 
         fprintf(output_file, "%f\n", angle);
-        
 	}
 
     fclose(output_file);

@@ -22,18 +22,16 @@ else
         cd $BUILD_DIR
         make main-1 || exit 1
         echo "Build complete, running code"
-        for (( i=5; i<=14000; i+=1 ))
+        for (( i=7000; i<=14000; i+=50 ))
         do 
-            # ./main-1 $i $OUTPUT_DIR/pythia-E-$i > $OUTPUT_DIR/output
             ./main-1 $i $OUTPUT_DIR/pythia-E-$i > /dev/null
         done
 
         # Testing
-        
-        # ./main-1 500 $OUTPUT_DIR/pythia-E-500 > $OUTPUT_DIR/output
+        # rm $OUTPUT_DIR/output
+        # ./main-1 14000 $OUTPUT_DIR/pythia-E-14000 > $OUTPUT_DIR/output
         # ./main-1 1000 $OUTPUT_DIR/pythia-E-1000 > /dev/null
         # ./main-1 13000 $OUTPUT_DIR/pythia-E-13000 > /dev/null
-
         echo "Done, output saved as ${OUTPUT_DIR}/"
     fi
 fi

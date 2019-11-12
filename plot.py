@@ -1,34 +1,33 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
-# You may need to change this
+## You may need to change this
 output_dir = 'out/'
 
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
+## Uncomment this to read the files and make a python binary
 
-# Energy Axis
-X = np.arange(5, 14000, 1)
-# Cos Theta Axis
-Y = np.arange(-1, 1, 0.01)
+# startVal, endVal, delta = 7000, 14000, 50
+# N = 10000
+# len = int((endVal - startVal) / delta) + 1
+# Z = np.zeros(len * N)
+# Z = np.reshape(Z, (len, N))
 
-# # Actual Angles
-Z = np.load('Z.bin.npy')
-# Z = np.empty(len(X) * 5000)
-# Z = np.reshape(Z, (len(X), 5000))
-# # idx = x - 5
-# for x in X:
-#     # if x % 1000 is 0:
-#     #     print(x)
-#     Z[x-5] = np.loadtxt(output_dir + "pythia-E-" + str(x))
+# val = startVal
+# while val <= endVal:
+#     d = np.loadtxt(output_dir + 'pythia-E-' + str(val))
+#     Z[int((val - startVal) / delta)] = d
+#     val += delta
 # np.save('Z.bin', Z)
 
-X, Y = np.meshgrid(X, Y)
-print(np.shape(X))
-print(np.shape(Y))
-print(np.shape(Z))
+## Actual Angles output to each file
 
-surf = ax.plot_surface(X, Y, Z)
+startVal, delta = 7000, 50
+Z = np.load('Z.bin.npy')
 
-# plt.show()
+for i, z in enumerate(Z):
+    plt.hist(z, bins=35)
+    plt.xlabel('Cos of ${\\theta}_{13}$')
+    plt.ylabel('Number of Events')
+    plt.title('E = {} GeV'.format(i * delta + startVal))
+    plt.savefig(output_dir + str(i) + '.png')
+    plt.close()
